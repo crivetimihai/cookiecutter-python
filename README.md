@@ -1,4 +1,4 @@
-cookiecutter-template
+cookiecutter-python
 ======================
 > Quickly setup a new Python project and packaging using standard boilterplate templates.
 
@@ -8,38 +8,31 @@ and some guidelines for Python packaging.
 Usage
 -----
 
-    pip install cookiecutter tox pytest
-    git clone https://gitlab.com/team-cm-lz/cookiecutter-template.git
-    cookiecutter cookiecutter-template/
+```bash
+git clone git@github.com:crivetimihai/cookiecutter-python.git
+pip install --user --upgrade cookiecutter
+cookiecutter cookiecutter-python
+```
 
-You should then change the classifiers in `{{ package_name }}/setup.py` - it is assumed that the project will run on the latest versions of Python 2 and 3, so you should remove any classifiers that do not apply. The full list of PyPI classifiers can be found [here](https://pypi.python.org/pypi?:action=list_classifiers).
+You should then change the classifiers in `{{ package_name }}/setup.py` - it is assumed that the project will run on the latest versions of Python 3, so you should remove any classifiers that do not apply. The full list of PyPI classifiers can be found [here](https://pypi.python.org/pypi?:action=list_classifiers).
 
-Fill out the README, and - if necessary - add a license to the project.
 
-Explanation
------------
-
-The decisions `cookiecutter-template` makes should all be explained here.
-
-### README
-
-* **README should use markdown format**
-  https://www.python.org/dev/peps/pep-0566/#description-content-type-optional
+Key Decisions
+--------------
 
 ### `setup.py`
 
-* **Use setuptools**
+- **Use setuptools**
   It's the standard packaging library for Python. `distribute` has merged back into `setuptools`, and `distutils` is less capable.
-* **setup.py should not import anything from the package**
+
+- **setup.py should not import anything from the package**
   When installing from source, the user may not have the packages dependencies installed, and importing the package is likely to raise an `ImportError`.
-* **setup.py should be the canonical source of package dependencies**
-  There is no reason to duplicate dependency specifiers (i.e. also using a `requirements.txt` file). See the testing section below for testing dependencies.
 
 ### Testing
 
-* **Use [Tox](https://tox.readthedocs.io) to manage test environments**
+- **Use [Tox](https://tox.readthedocs.io) to manage test environments**
   Tox provides isolation, runs tests across multiple Python versions, and ensures the package can be installed.
-* **Uses [pytest](https://docs.pytest.org) as the default test runner**
+- **Use [pytest](https://docs.pytest.org) as the default test runner**
   This can be changed easily, though pytest is a easier, more powerful test library and runner than the standard library's unittest.
-* **Define testing dependencies in `tox.ini`**
+- **Define testing dependencies in `tox.ini`**
   Avoid duplicating dependency definitions, and use `tox.ini` as the canonical description of how the unittests should be run.
