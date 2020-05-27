@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+"""Commandline tool example. Run like: {{cookiecutter.package_name}}_cmd hello"""
+
+import argparse
+import {{cookiecutter.package_name}}
+
+def parse_args():
+    """Parse arguments."""
+    description = ('What my commandline tool does')
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument("echo", help="echo the string you use here")
+
+    args = parser.parse_args()
+    return args
+
+def main():
+    """Main"""
+    print({{cookiecutter.package_name}}.my_function())
+    args = parse_args()
+
+    print(args.echo)
+
+if __name__ == '__main__':
+    main()

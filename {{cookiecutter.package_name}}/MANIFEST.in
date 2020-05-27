@@ -1,0 +1,3 @@
+recursive-include tests/data *
+recursive-include examples *.ipynb
+include docs/*
