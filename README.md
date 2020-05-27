@@ -20,19 +20,32 @@ You should then change the classifiers in `{{ package_name }}/setup.py` - it is 
 Key Decisions
 --------------
 
-### `setup.py`
+### Packaging
 
 - **Use setuptools**
-  It's the standard packaging library for Python. `distribute` has merged back into `setuptools`, and `distutils` is less capable.
+  It's the standard packaging library for Python. `distribute` has merged back into `setuptools`, and `distutils` is less capable. Use `setup.py` with `setup.cfg`
 
 - **setup.py should not import anything from the package**
   When installing from source, the user may not have the packages dependencies installed, and importing the package is likely to raise an `ImportError`.
+
+- **Makefile used for all application build steps**
+  Capture all commands inside a `Makefile`. Ex: `make build`, `make docker`, `make buildah`, `make test`, etc.
+
+- **Place modules directory in root, avoid ./src/module**
+  See [Structuring Your Project](https://docs.python-guide.org/writing/structure/)
 
 ### Testing
 
 - **Use [Tox](https://tox.readthedocs.io) to manage test environments**
   Tox provides isolation, runs tests across multiple Python versions, and ensures the package can be installed.
+
 - **Use [pytest](https://docs.pytest.org) as the default test runner**
   This can be changed easily, though pytest is a easier, more powerful test library and runner than the standard library's unittest.
+
 - **Define testing dependencies in `tox.ini`**
   Avoid duplicating dependency definitions, and use `tox.ini` as the canonical description of how the unittests should be run.
+
+### CLI
+
+- **Use `argparse` to parse arguments.**
+  It's in the standard library and supports complex scenarios. Alternatives include `click` and `docopt`.
