@@ -49,3 +49,16 @@ Key Decisions
 
 - **Use `argparse` to parse arguments.**
   It's in the standard library and supports complex scenarios. Alternatives include `click` and `docopt`.
+
+- **Use [configparser — Configuration file parser](https://docs.python.org/3/library/configparser.html)
+  Standard library configuration parser, supports `ini` format. See also: https://hackersandslackers.com/simplify-your-python-projects-configuration/
+
+
+References
+----------
+
+- https://www.bernat.tech/pep-517-and-python-packaging/
+- https://www.python.org/dev/peps/pep-0518/
+- https://snarky.ca/what-the-heck-is-pyproject-toml/
+- https://hackersandslackers.com/simplify-your-python-projects-configuration/
+- https://pypi.org/project/pipx/
