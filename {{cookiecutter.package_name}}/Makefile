@@ -21,23 +21,29 @@ venv:
 	@echo -e "Entering virtual environment using:\n\n\t$ source $(VENV_DIR)/bin/activate\n"
 	@source $(VENV_DIR)/bin/activate
 
-# help: clean                                                                                                            - clean all files using setup.py
+# help:
+# help: CLEANUP
+
+# help: clean                          - clean all files using setup.py
 .PHONY: clean
 clean:
-        @python setup.py clean
+	@python setup.py clean
 
 
-# help: git-clean                        - clean all files using .gitignore rules
+# help: git-clean                      - clean all files using .gitignore rules
 .PHONY: git-clean
 git-clean:
-        @git clean -X -f -d
+	@git clean -X -f -d
 
 
-# help: git-scrub                       - clean all files, even untracked files
+# help: git-scrub                      - clean all files, even untracked files
 .PHONY: git-scrub
 git-scrub:
-        git clean -x -f -d
+	git clean -x -f -d
 
+
+# help:
+# help: TEST
 
 # help: test                           - run tests
 .PHONY: test
@@ -61,13 +67,16 @@ check-coverage:
 	@cd docs/source/coverage; mv index.html coverage.html
 
 
-# help: tox                   					- build for all python versions with tox
+# help: tox                  					- build for all python versions with tox
 .PHONY: tox
 tox:
 	@tox
 
 
-# help: format-black                    - format code with black
+# help:
+# help: LINT AND INDENT
+
+# help: format-black                   - format code with black
 .PHONY: format-black
 format-black:
 	@black {{cookiecutter.package_name}} tests setup.py
@@ -97,6 +106,9 @@ check-types:
 	@MYPYPATH=$(VENV_DIR)/lib/python*/site-packages mypy -p {{cookiecutter.package_name}} --ignore-missing-imports
 
 
+# help:
+# help: DOCS
+
 # help: docs                           - generate project documentation
 .PHONY: check-coverage
 docs: check-coverage
@@ -118,6 +130,9 @@ serve-docs:
 	@cd docs/build; python -m http.server --bind 127.0.0.1
 
 
+# help:
+# help: PACKAGE
+
 # help: dist                           - create a wheel distribution package
 .PHONY: dist
 dist:
@@ -136,6 +151,12 @@ install:
 	@python setup.py install
 
 
+# help: install-editable               - install the package using pip install --editable
+.PHONY: install-editable
+install-editable:
+	@python -m pip install --editable .
+
+
 # help: dist-test                      - test a wheel distribution package
 .PHONY: dist-test
 dist-test: dist
@@ -148,11 +169,13 @@ dist-upload:
 	@twine upload dist/{{cookiecutter.package_name}}-*-py3-none-any.whl
 
 
+# help:
+# help: CONTAINERS
+
 # help: docker                         - build container using docker
 .PHONY: docker
 docker:
 	@docker build -t {{cookiecutter.docker_id}}/{{cookiecutter.package_name}} .
-
 
 
 # help: podman                         - build container using podman
