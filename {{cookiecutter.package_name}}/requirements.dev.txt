@@ -1,5 +1,8 @@
 -r requirements.txt
 black
+yapf
+pylint
+flake8
 coverage
 mypy
 sphinx

@@ -21,16 +21,22 @@ venv:
 	@echo -e "Entering virtual environment using:\n\n\t$ source $(VENV_DIR)/bin/activate\n"
 	@source $(VENV_DIR)/bin/activate
 
-# help: clean                          - clean all files using .gitignore rules
+# help: clean                                                                                                            - clean all files using setup.py
 .PHONY: clean
 clean:
-	@git clean -X -f -d
+        @python setup.py clean
 
 
-# help: scrub                          - clean all files, even untracked files
-.PHONY: scrub
-scrub:
-	git clean -x -f -d
+# help: git-clean                        - clean all files using .gitignore rules
+.PHONY: git-clean
+git-clean:
+        @git clean -X -f -d
+
+
+# help: git-scrub                       - clean all files, even untracked files
+.PHONY: git-scrub
+git-scrub:
+        git clean -x -f -d
 
 
 # help: test                           - run tests
@@ -61,16 +67,28 @@ tox:
 	@tox
 
 
-# help: style                          - indent code with black
-.PHONY: style
-style:
-	@black {{cookiecutter.package_name}} tests
+# help: format-black                    - format code with black
+.PHONY: format-black
+format-black:
+	@black {{cookiecutter.package_name}} tests setup.py
 
 
-# help: flake8                         - lint code with flake8
-.PHONY: flake8
-flake8:
-	@flake8 {{cookiecutter.package_name}} tests
+# help: format-yapf                    - format code with yapf
+.PHONY: format-yapf
+format-yapf:
+	@yapf -i --recursive {{cookiecutter.package_name}} tests setup.py
+
+
+# help: lint-flake8                    - lint code with flake8
+.PHONY: lint-flake8
+lint-flake8:
+	@flake8 {{cookiecutter.package_name}} tests setup.py
+
+
+# help: lint-pylint                    - lint code with pylint
+.PHONY: lint-pylint
+lint-pylint:
+	@pylint {{cookiecutter.package_name}} tests setup.py
 
 
 # help: check-types                    - check type hint annotations
