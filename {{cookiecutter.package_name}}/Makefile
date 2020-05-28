@@ -50,21 +50,27 @@ test-verbose:
 check-coverage:
 	@coverage run -m unittest discover -s tests
 	@# produce html coverage report on modules
-	@coverage html -d docs/source/coverage --include="src/{{cookiecutter.package_name}}/*"
+	@coverage html -d docs/source/coverage --include="{{cookiecutter.package_name}}/*"
 	@# rename coverage html file for latter use with documentation
 	@cd docs/source/coverage; mv index.html coverage.html
 
 
-# help: style                          - perform code format compliance check
+# help: style                          - indent code with black
 .PHONY: style
 style:
-	@black src/{{cookiecutter.package_name}} tests
+	@black {{cookiecutter.package_name}} tests
+
+
+# help: flake8                         - lint code with flake8
+.PHONY: flake8
+flake8:
+	@flake8 {{cookiecutter.package_name}} tests
 
 
 # help: check-types                    - check type hint annotations
 .PHONY: check-types
 check-types:
-	@cd src; MYPYPATH=$(VENV_DIR)/lib/python*/site-packages mypy -p {{cookiecutter.package_name}} --ignore-missing-imports
+	@MYPYPATH=$(VENV_DIR)/lib/python*/site-packages mypy -p {{cookiecutter.package_name}} --ignore-missing-imports
 
 
 # help: docs                           - generate project documentation
@@ -121,20 +127,20 @@ dist-upload:
 # help: docker                         - build container using docker
 .PHONY: docker
 docker:
-	docker build -t {{cookiecutter.docker_id}}/{{cookiecutter.package_name}} .
+	@docker build -t {{cookiecutter.docker_id}}/{{cookiecutter.package_name}} .
 
 
 
 # help: podman                         - build container using podman
 .PHONY: podman
 podman:
-	podman build -t {{cookiecutter.docker_id}}/{{cookiecutter.package_name}} .
+	@podman build -t {{cookiecutter.docker_id}}/{{cookiecutter.package_name}} .
 
 
 # help: buildah                        - build container using buildah
 .PHONY: buildah
 buildah:
-	./buildah.sh
+	@./buildah.sh
 
 
 # Keep these lines at the end of the file to retain output formatting.
