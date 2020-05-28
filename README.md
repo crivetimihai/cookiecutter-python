@@ -67,3 +67,14 @@ References
 - https://snarky.ca/what-the-heck-is-pyproject-toml/
 - https://hackersandslackers.com/simplify-your-python-projects-configuration/
 - https://pypi.org/project/pipx/
+
+Recommended editors
+------------------
+
+- micro
+- vim
+
+## Visual Studio Code
+
+- https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring
+- https://marketplace.visualstudio.com/items?itemName=donjayamanne.python-extension-pack

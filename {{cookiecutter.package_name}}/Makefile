@@ -1,16 +1,11 @@
 VENVS_DIR := $(HOME)/.venv
 VENV_DIR := $(VENVS_DIR)/{{cookiecutter.package_name}}
 
-# help:
-# help: {{cookiecutter.package_display_name}} Makefile help:
-# help:
-
-# help: help                           - display this makefile's help information
 .PHONY: help
 help:
 	@grep "^# help\:" Makefile | grep -v grep | sed 's/\# help\: //' | sed 's/\# help\://'
 
-
+# help: MAINTAIN
 # help: venv                           - create a virtual environment for development
 .PHONY: venv
 venv:
@@ -18,11 +13,9 @@ venv:
 	@rm -Rf "$(VENV_DIR)"
 	@python3 -m venv "$(VENV_DIR)"
 	@/bin/bash -c "source $(VENV_DIR)/bin/activate && pip install pip --upgrade && pip install -r requirements.dev.txt && pip install -e ."
-	@echo -e "Entering virtual environment using:\n\n\t$ source $(VENV_DIR)/bin/activate\n"
-	@source $(VENV_DIR)/bin/activate
+	@echo -e "Entering virtual environment using:\n\n\t$ . $(VENV_DIR)/bin/activate\n"
+	@. $(VENV_DIR)/bin/activate
 
-# help:
-# help: CLEANUP
 
 # help: clean                          - clean all files using setup.py
 .PHONY: clean
@@ -40,6 +33,39 @@ git-clean:
 .PHONY: git-scrub
 git-scrub:
 	git clean -x -f -d
+
+
+# help:
+# help: LINT
+
+# help: format-black                   - format code with black
+.PHONY: format-black
+format-black:
+	@black {{cookiecutter.package_name}} tests setup.py
+
+
+# help: format-yapf                    - format code with yapf
+.PHONY: format-yapf
+format-yapf:
+	@yapf -i --recursive {{cookiecutter.package_name}} tests setup.py
+
+
+# help: lint-flake8                    - lint code with flake8
+.PHONY: lint-flake8
+lint-flake8:
+	@flake8 {{cookiecutter.package_name}} tests setup.py
+
+
+# help: lint-pylint                    - lint code with pylint
+.PHONY: lint-pylint
+lint-pylint:
+	@pylint {{cookiecutter.package_name}} tests setup.py
+
+
+# help: check-types                    - check type hint annotations
+.PHONY: check-types
+check-types:
+	@MYPYPATH=$(VENV_DIR)/lib/python*/site-packages mypy -p {{cookiecutter.package_name}} --ignore-missing-imports
 
 
 # help:
@@ -74,40 +100,7 @@ tox:
 
 
 # help:
-# help: LINT AND INDENT
-
-# help: format-black                   - format code with black
-.PHONY: format-black
-format-black:
-	@black {{cookiecutter.package_name}} tests setup.py
-
-
-# help: format-yapf                    - format code with yapf
-.PHONY: format-yapf
-format-yapf:
-	@yapf -i --recursive {{cookiecutter.package_name}} tests setup.py
-
-
-# help: lint-flake8                    - lint code with flake8
-.PHONY: lint-flake8
-lint-flake8:
-	@flake8 {{cookiecutter.package_name}} tests setup.py
-
-
-# help: lint-pylint                    - lint code with pylint
-.PHONY: lint-pylint
-lint-pylint:
-	@pylint {{cookiecutter.package_name}} tests setup.py
-
-
-# help: check-types                    - check type hint annotations
-.PHONY: check-types
-check-types:
-	@MYPYPATH=$(VENV_DIR)/lib/python*/site-packages mypy -p {{cookiecutter.package_name}} --ignore-missing-imports
-
-
-# help:
-# help: DOCS
+# help: DOCUMENT
 
 # help: docs                           - generate project documentation
 .PHONY: check-coverage
@@ -170,7 +163,7 @@ dist-upload:
 
 
 # help:
-# help: CONTAINERS
+# help: CONTAINERIZE
 
 # help: docker                         - build container using docker
 .PHONY: docker
