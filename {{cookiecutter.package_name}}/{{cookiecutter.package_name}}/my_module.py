@@ -1,5 +1,4 @@
 def my_function():
-    """Returns something."""
     fox = r"""
    /\   /\ .*(Hello!)
   //\\_//\\     ____
