@@ -6,14 +6,27 @@ help:
 	@grep "^# help\:" Makefile | grep -v grep | sed 's/\# help\: //' | sed 's/\# help\://'
 
 # help: MAINTAIN
-# help: venv                           - create a virtual environment for development
+# help: venv                           - create a clean virtual environment for development
 .PHONY: venv
 venv:
 	@test -d "$(VENVS_DIR)" || mkdir -p "$(VENVS_DIR)"
 	@rm -Rf "$(VENV_DIR)"
 	@python3 -m venv "$(VENV_DIR)"
 	@/bin/bash -c "source $(VENV_DIR)/bin/activate && pip install pip --upgrade && pip install -r requirements.dev.txt && pip install -e ."
-	@echo -e "Entering virtual environment using:\n\n\t$ . $(VENV_DIR)/bin/activate\n"
+	@echo -e "Enter virtual environment using:\n. $(VENV_DIR)/bin/activate\n"
+
+
+# help: venv-update                    - update a virtual environment for development
+.PHONY: venv-update
+venv-update:
+	@/bin/bash -c "source $(VENV_DIR)/bin/activate && pip install pip --upgrade && pip install --upgrade -r requirements.dev.txt && pip install -e ."
+	@echo -e "Enter virtual environment using:\n. $(VENV_DIR)/bin/activate\n"
+
+
+# help: activate                       - enter existing venv
+.PHONY: activate
+activate:
+	@echo -e "Enter virtual environment using:\n. $(VENV_DIR)/bin/activate\n"
 	@. $(VENV_DIR)/bin/activate
 
 
@@ -93,7 +106,7 @@ check-coverage:
 	@cd docs/source/coverage; mv index.html coverage.html
 
 
-# help: tox                  					- build for all python versions with tox
+# help: tox                            - build for all python versions with tox
 .PHONY: tox
 tox:
 	@tox
