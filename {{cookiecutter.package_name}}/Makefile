@@ -18,8 +18,8 @@ venv:
 	@rm -Rf "$(VENV_DIR)"
 	@python3 -m venv "$(VENV_DIR)"
 	@/bin/bash -c "source $(VENV_DIR)/bin/activate && pip install pip --upgrade && pip install -r requirements.dev.txt && pip install -e ."
-	@echo -e "Enter virtual environment using:\n\n\t$ source $(VENV_DIR)/bin/activate\n"
-
+	@echo -e "Entering virtual environment using:\n\n\t$ source $(VENV_DIR)/bin/activate\n"
+	@source $(VENV_DIR)/bin/activate
 
 # help: clean                          - clean all files using .gitignore rules
 .PHONY: clean
@@ -53,6 +53,12 @@ check-coverage:
 	@coverage html -d docs/source/coverage --include="{{cookiecutter.package_name}}/*"
 	@# rename coverage html file for latter use with documentation
 	@cd docs/source/coverage; mv index.html coverage.html
+
+
+# help: tox                   					- build for all python versions with tox
+.PHONY: tox
+tox:
+	@tox
 
 
 # help: style                          - indent code with black
