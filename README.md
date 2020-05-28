@@ -34,6 +34,11 @@ Key Decisions
 - **Place modules directory in root, avoid ./src/module**
   See [Structuring Your Project](https://docs.python-guide.org/writing/structure/)
 
+- **Use bump2version**
+  See [https://github.com/c4urself/bump2version](https://github.com/c4urself/bump2version). Configured in `.bumpversion.cfg`. To update your version:
+
+  `bump2version --verbose --new-version 0.1.1 major`
+
 ### Testing
 
 - **Use [Tox](https://tox.readthedocs.io) to manage test environments**
