@@ -68,6 +68,11 @@ References
 - https://hackersandslackers.com/simplify-your-python-projects-configuration/
 - https://pypi.org/project/pipx/
 
+Recommended tools
+------------------
+- https://awesome-python.com/#command-line-interface-development
+- rich - Python library for rich text and beautiful formatting in the terminal. Also provides a great RichHandler log handler.
+
 Recommended editors
 ------------------
 
@@ -78,3 +83,4 @@ Recommended editors
 
 - https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring
 - https://marketplace.visualstudio.com/items?itemName=donjayamanne.python-extension-pack
+

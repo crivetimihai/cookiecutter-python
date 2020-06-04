@@ -1,0 +1,4 @@
+- https://lgtm.com/
+- https://docs.builtoncement.com/
+- https://github.com/willmcgugan/rich
+- https://awesome-python.com/#command-line-interface-development
